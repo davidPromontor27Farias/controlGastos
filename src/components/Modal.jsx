@@ -1,23 +1,39 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import CerrarModal from '../img/cerrar.svg'
 import AlertaError from './AlertaError';
 
 
-function Modal({setModal, animarModal, setAnimarModal, guardarGasto}) {
+function Modal({setModal, animarModal, setAnimarModal, guardarGasto, gastoEditar, setGastoEditar}) {
 
   //Se crean los states para cada campo del formulario de gastos
   const [nombre, setNombre] = useState('');
   const [cantidad, setCantidad] = useState(0);
   const [categoria, setCategoria] = useState('');
+  const [fecha, setFecha] = useState('');
+  const [id, setId] = useState('');
 
   const [alerta, setAlerta] = useState('');
 
+
+  useEffect(()=>{
+    //verificamos que tenga algo 
+    if(Object.keys(gastoEditar).length > 0){
+      //llenamos los campos con la informacion previa
+      setNombre(gastoEditar.nombre);
+      setCantidad(gastoEditar.cantidad);
+      setCategoria(gastoEditar.categoria);
+      //le pasamos el id
+      setId(gastoEditar.id)
+      setFecha(gastoEditar.fecha);
+    }
+  }, []);
 
 
   const closeModal = () =>{
         //Aqui cerramos el modal
         setAnimarModal(false);
-
+        
+        setGastoEditar({})
         //Pasamos a false el de modal
         setTimeout(() => {
             setModal(false);
@@ -37,7 +53,7 @@ function Modal({setModal, animarModal, setAnimarModal, guardarGasto}) {
       }
 
       //Le pasamos los datos al prop de guardarGasto
-      guardarGasto({nombre, cantidad, categoria});
+      guardarGasto({nombre, cantidad, categoria, id, fecha});
    
     }
 
@@ -60,7 +76,7 @@ function Modal({setModal, animarModal, setAnimarModal, guardarGasto}) {
             {alerta && <AlertaError tipo="error">{alerta}</AlertaError>}
 
             <legend>
-                Nuevo Gasto
+                {gastoEditar.nombre ? 'Editar registro': 'Nuevo gasto'}
             </legend>
 
             <div className="campo">
@@ -85,7 +101,7 @@ function Modal({setModal, animarModal, setAnimarModal, guardarGasto}) {
               </select>
             </div>
 
-            <input type="submit" value="Añadir gasto" />
+            <input type="submit" value={gastoEditar.nombre ? 'Guardar edicion': 'Guardar registro'} />
 
             
         </form>

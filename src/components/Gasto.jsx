@@ -24,19 +24,22 @@ const diccionarioIconos = {
 
 
 //Es el gast que se veera en la pantalla
-function Gasto({gasto}) {
-    const {nombre, cantidad, categoria, fecha} = gasto;
+function Gasto({gasto, setGastoEditar, eliminarGasto}) {
+    const {nombre, cantidad, categoria, fecha, id} = gasto;
 
     const leadingActions = () =>(
         <LeadingActions>
-            <SwipeAction onClick={()=> console.log('Editar')}>
+            <SwipeAction onClick={()=> setGastoEditar(gasto)}>
                 Editar
             </SwipeAction>
         </LeadingActions>
     )
     const trailingActions = ()=>(
         <TrailingActions>
-            <SwipeAction onClick={()=> console.log('Eliminando')}>
+            <SwipeAction
+             onClick={()=> eliminarGasto(id)}
+             destructive={true}
+             >
                 Eliminar
             </SwipeAction>
         </TrailingActions>

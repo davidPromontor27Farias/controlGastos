@@ -1,6 +1,6 @@
 import Gasto from "./Gasto.jsx"
 
-function ListadoGastos({gastos}) {
+function ListadoGastos({gastos, setGastoEditar, eliminarGasto}) {
   return (
     <div className="listado-gastos contenedor">
         <h2>{gastos.length > 0 ? 'Gastos' : 'Cree un gasto'}</h2>
@@ -9,6 +9,8 @@ function ListadoGastos({gastos}) {
             <Gasto
             key={gasto.id}
             gasto={gasto}
+            setGastoEditar={setGastoEditar}
+            eliminarGasto={eliminarGasto}
             />
         ))}
     </div>
