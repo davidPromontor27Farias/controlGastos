@@ -1,12 +1,13 @@
 import Gasto from "./Gasto.jsx"
 
 function ListadoGastos({gastos, setGastoEditar, eliminarGasto, gastosFiltrados, filtro}) {
+ 
   return (
     <div className="listado-gastos contenedor">
 
         {filtro ? (
           <>
-            <h2>{gastosFiltrados.length > 0 ? 'Gastos' : 'Cree un gasto en esta categoria'}</h2>
+            <h2>{gastosFiltrados.length ? 'Gastos' : 'Cree un gasto en esta categoria'}</h2>
 
             {
               gastosFiltrados.map(gasto => (
@@ -19,11 +20,10 @@ function ListadoGastos({gastos, setGastoEditar, eliminarGasto, gastosFiltrados, 
               ))
             }
           </>
-        ): (
-
+        ): 
+        (
           <>
-            <h2>{gastos.length > 0 ? 'Gastos' : 'Cree un gasto'}</h2>
-
+            <h2>{gastos.length ? 'Gastos' : 'Cree un gasto'}</h2>
             {
               gastos.map(gasto => (
                   <Gasto
@@ -34,9 +34,9 @@ function ListadoGastos({gastos, setGastoEditar, eliminarGasto, gastosFiltrados, 
                   />
               ))
             }
-        </>
-
-        )}
+          </>
+        )
+        }
     </div>
   )
 }

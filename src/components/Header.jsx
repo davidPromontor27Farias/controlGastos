@@ -4,15 +4,15 @@ import NuevoPresupuesto from './NuevoPresupuesto'
 
 
 
-function Header({presupuesto, setPresupuesto, isValiedPresupuesto, setIsValiedPresupuesto, gastos, setGastos}) {
+function Header({gastos, setGastos, presupuesto, setPresupuesto, isValiedPresupuesto, setIsValiedPresupuesto}) {
   return (
     <header>
         <h1>Planificador de Gastos</h1>
         {isValiedPresupuesto ? (
             <ControlPresupuesto
-              presupuesto={presupuesto}
               gastos={gastos}
               setGastos={setGastos}
+              presupuesto={presupuesto}
               setPresupuesto={setPresupuesto}
               setIsValiedPresupuesto={setIsValiedPresupuesto}
             />
