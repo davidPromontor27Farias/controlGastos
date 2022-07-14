@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
+import Filtros from './components/Filtros';
 import Header from './components/Header'
 import ListadoGastos from './components/ListadoGastos';
 import Modal from './components/Modal';
 import { generarId } from './Helpers';
+
 
 import IconoNuevoGasto from './img/nuevo-gasto.svg';
 
@@ -16,6 +18,10 @@ function App() {
   const [animarModal, setAnimarModal] = useState(false);
   const [gastos, setGastos] = useState(localStorage.getItem('gastos') ? JSON.parse(localStorage.getItem('gastos')) : []);
   const [gastoEditar, setGastoEditar] = useState({});
+
+  //definimos un state para los filtro
+  const [filtro, setFiltro] = useState('');
+  const [gastosFiltrados, setGastosFiltrados] = useState([]);
 
   useEffect(()=>{
     //Comporbamos que se haya la edicion
@@ -59,8 +65,15 @@ function App() {
       setAnimarModal(true);
     }, 300);
   }
-  const cantidadGasto = gastos.cantidad;
 
+  useEffect(()=>{
+    if(filtro){
+      //se filtran los gastos por categoria
+      const gastosFiltrados = gastos.filter(gasto => gasto.categoria === filtro);
+      setGastosFiltrados(gastosFiltrados);
+    }
+
+  }, [filtro])
 
   //Creamos una funcion para guardar el gasto
   const guardarGasto = gasto =>{
@@ -104,16 +117,24 @@ function App() {
         isValiedPresupuesto={isValiedPresupuesto}
         setIsValiedPresupuesto={setIsValiedPresupuesto}
         gastos={gastos}
+        setGastos={setGastos}
       />
 
       {isValiedPresupuesto ? (
 
         <>
           <main>
+            <Filtros
+              filtro={filtro}
+              setFiltro={setFiltro}
+            />
             <ListadoGastos
               gastos={gastos}
               setGastoEditar={setGastoEditar}
               eliminarGasto={eliminarGasto}
+              gastosFiltrados={gastosFiltrados}
+              filtro={filtro}
+
             />
           </main>
           <div className="nuevo-gasto">
